@@ -176,7 +176,7 @@ chmod 600 /etc/letsencrypt/.certbot/.secret/cloudflare.$domain.ini &>/dev/null
 chown root:root /etc/letsencrypt/.certbot/.secret/cloudflare.$domain.ini &>/dev/null
 
 # makes cronjob to execute certbot every day
-cronjob="0 0 * * root /bin/bash -c '/usr/bin/certbot certonly --server https://acme-v02.api.letsencrypt.org/directory --dns-cloudflare --dns-cloudflare-credentials /etc/letsencrypt/.certbot/.secret/cloudflare.${domain}.ini --preferred-challenges dns -d \"${domain}\" -d \"*.${domain}\" --non-interactive --deploy-hook \"$reloadcmd\" >> /var/log/certbot-cloudflare-api.log 2>&1'"
+cronjob="0 0 * * * root /bin/bash -c '/usr/bin/certbot certonly --server https://acme-v02.api.letsencrypt.org/directory --dns-cloudflare --dns-cloudflare-credentials /etc/letsencrypt/.certbot/.secret/cloudflare.${domain}.ini --preferred-challenges dns -d \"${domain}\" -d \"*.${domain}\" --non-interactive --deploy-hook \"$reloadcmd\" >> /var/log/certbot-cloudflare-api.log 2>&1'"
 
 # execute the first renewal
 certbot certonly --server https://acme-v02.api.letsencrypt.org/directory --dns-cloudflare --dns-cloudflare-credentials /etc/letsencrypt/.certbot/.secret/cloudflare.${domain}.ini --preferred-challenges dns -d "${domain}" -d "*.${domain}" --cert-name "${domain}" --non-interactive --agree-tos --email ${email} --force-renewal > /var/log/certbot-cloudflare-api.log
